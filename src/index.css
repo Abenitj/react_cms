@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* White Theme */
+:root {
+  --primary: #fff; /* White */
+  --secondary: #F9F6F7; /* Light Gray */
+  --secondary-v2: #e2e2e2; /* Light Grayish */
+  --neutral: #1E2A5E; /* Dark Grayish Blue */
+  --secondary-v3: #ebebeb; /* Light Grayish */
+}
+
+.dark-mode {
+  --primary: #101a27; /* Dark Gray */
+  --secondary: #18202d; /* Darker Gray */
+  --secondary-v2: #363f4b; /* Dark Grayish */
+  --neutral: #F9F6F7; /* Light Gray */
+  --secondary-v3: #1e2630; /* Very Dark Gray */
+}
+
+/* Greenish Theme */
+:root.green {
+  --primary: #fff; /* White */
+  --secondary: #E9F5E8; /* Light Green */
+  --secondary-v2: #C5E1C5; /* Light Grayish Green */
+  --neutral: #3C7A3D; /* Dark Green */
+  --secondary-v3: #B9FBC0; /* Soft Green */
+}
+
+.dark-mode.green {
+  --primary: #0A1F0A; /* Dark Green */
+  --secondary: #1A2D1A; /* Darker Green */
+  --secondary-v2: #2C3E24; /* Dark Grayish Green */
+  --secondary-v3: #1F2C1F; /* Very Dark Green */
+}
