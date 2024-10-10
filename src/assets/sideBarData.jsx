@@ -37,7 +37,7 @@ export default [
   {
     label: "About Company",
     icon: <FaBuilding />,
-    link: "/about-company"
+    link: "/aboutCompany"
   },
   {
     label: "Company Value",
@@ -47,6 +47,6 @@ export default [
   {
     label: "Contact",
     icon: <FaEnvelope />,
-    link: "/contact-details"
+    link: "/contact"
   },
 ];

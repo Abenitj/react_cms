@@ -13,6 +13,9 @@ import Navbar from "./Components/Navbar";
 import Sidebar from "./Components/SideBar";
 import Service from "./page/service";
 import Product from "./page/product";
+import AboutCompany from "./page/aboutCompany";
+import CompanyValue from "./page/companyValue";
+import Contact from "./page/contact";
 const App = () => {
 const [isopen, setisopen] = useState(false)
   return (
@@ -38,9 +41,11 @@ const [isopen, setisopen] = useState(false)
               <Route path="/section-title" element={<SectionTitle />} />
               <Route path="/site-configuration" element={<SiteConfiguration />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/slider" element={<Slider />} />
+              <Route path="/AboutCompany" element={<AboutCompany />} />
               <Route path="/product" element={<Product />} />
               <Route path="/service" element={<Service/>}/>
+              <Route path="/contact" element={<Contact/>}/>
+              <Route path="/company-value" element={<CompanyValue/>}/>
             </Routes>
           </main>
         </div>
