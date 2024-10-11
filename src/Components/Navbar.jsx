@@ -16,7 +16,7 @@ const Navbar = ({onClose}) => {
     <div>  <FaBars className='hover:cursor-pointer' onClick={onClose} size={20}/></div>
       {/* Name/Brand */}
       <div className="text-xl font-bold">
-        Abissinia Software
+       Senariyo Trading PLC
       </div>
       
       {/* Right side: Dark mode toggle and profile */}
@@ -29,11 +29,11 @@ const Navbar = ({onClose}) => {
           {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
         </button>
         
-        {/* Profile Icon */}
+        {/* Profile Icon
         <div className="flex items-center space-x-2">
           <FaUserCircle size={30} className="" />
           <span className="hidden md:inline">Profile</span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

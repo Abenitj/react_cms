@@ -1,6 +1,6 @@
 export default [
-    { name: 'slide_title', type: 'text', required: true, label: 'slide_title' },
-    { name: 'slide_text', type: 'text', required: true, label: 'slide_text' },
-    { name: 'ufile', type: 'file', required: true, label: 'file' },
+    { name: 'title', type: 'text', required: true, label: 'title' },
+    { name: 'description', type: 'text', required: true, label: 'description' },
+    { name: 'image', type: 'file', required: true, label: 'image' },
   ];
   

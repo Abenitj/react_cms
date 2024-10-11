@@ -4,11 +4,9 @@ import Add_Button from './add-button';
 
 const Table = ({ tableHeaders, data = [], onEdit, onDelete, onAdd, title }) => {
   const [searchTerm, setSearchTerm] = useState('');
-
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
   // Ensure that data is an array before filtering
   const filteredData = Array.isArray(data)
     ? data.filter((item) =>

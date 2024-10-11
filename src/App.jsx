@@ -32,7 +32,7 @@ const [isopen, setisopen] = useState(false)
             <Navbar onClose={()=>setisopen(!isopen)} />
           </div>
           {/* Main content: the dashboard's main content area */}
-          <main className="flex-1 w-300 bg-primary pt-4 overflow-y-auto">
+          <main className=" flex-1 w-300 bg-primary pt-4 overflow-y-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/user" element={<User />} />
@@ -45,6 +45,7 @@ const [isopen, setisopen] = useState(false)
               <Route path="/product" element={<Product />} />
               <Route path="/service" element={<Service/>}/>
               <Route path="/contact" element={<Contact/>}/>
+              <Route path="/slider" element={<Slider/>}/>
               <Route path="/company-value" element={<CompanyValue/>}/>
             </Routes>
           </main>

@@ -5,4 +5,6 @@ export default [
     { header: "email", key: "email" },
     { header: "city", key: "city" },
     { header: "country", key: "country" },
+    { header: "createdAt", key: "createdAt" },
+    { header: "updatedAt", key: "updatedAt" },
   ];

@@ -1,6 +1,6 @@
 import { 
-  FaHome, FaUser, FaCog, FaBlog, FaBox, FaQuoteRight, FaSlidersH, FaQuestionCircle, 
-  FaBuilding, FaUsers, FaShieldAlt, FaKey, FaEnvelope, FaCommentDots, FaChartLine 
+  FaHome, FaCog, FaBlog, FaBox, FaQuoteRight, FaSlidersH, FaQuestionCircle, 
+  FaBuilding, FaShieldAlt, FaEnvelope, FaUsers 
 } from 'react-icons/fa';
 
 export default [
@@ -35,13 +35,18 @@ export default [
     link: "/faq"
   },
   {
+    label: "Slider",
+    icon: <FaSlidersH />,  // Changed to better fit the "Slider" label
+    link: "/slider"
+  },
+  {
     label: "About Company",
     icon: <FaBuilding />,
     link: "/aboutCompany"
   },
   {
     label: "Company Value",
-    icon: <FaShieldAlt />,
+    icon: <FaUsers />,  // Changed to represent people, fitting "Company Value"
     link: "/company-Value"
   },
   {

@@ -4,5 +4,7 @@ export default [
     { header: 'Image', key: 'image' },
     { header: 'Pricing', key: 'pricing' },
     { header: 'Features', key: 'features' },
+    { header: "createdAt", key: "createdAt" },
+    { header: "updatedAt", key: "updatedAt" },
   ];
   

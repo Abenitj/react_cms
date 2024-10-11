@@ -1,6 +1,5 @@
 import {
   FaBlog,
-  FaUser,
   FaBoxOpen,
   FaQuestionCircle,
   FaCommentDots,
@@ -22,6 +21,11 @@ export default [
     label: "Total FAQs",
     url: "http://localhost:3002/api/faq",
     Icon: FaQuestionCircle,
+  },
+  {
+    label: "Total Sliders",
+    url: "http://localhost:3002/api/slider",
+    Icon: FaIndustry,  // Changed label to "Total Sliders"
   },
   {
     label: "Total Testimonials",

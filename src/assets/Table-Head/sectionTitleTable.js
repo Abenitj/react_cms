@@ -13,7 +13,9 @@ export default [
     { header: "contact_title", key: "contact_title" },
     { header: "contact_text", key: "contact_text" },
     { header: "enquiry_title", key: "enquiry_title" },
-    { header: "enquiry_text", key: "enquiry_text" }
+    { header: "enquiry_text", key: "enquiry_text" },
+    { header: "createdAt", key: "createdAt" },
+    { header: "updatedAt", key: "updatedAt" },
   ];
  
   

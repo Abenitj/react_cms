@@ -14,7 +14,7 @@ const Slider = () => {
   const [selectedUser, setselectedUser] = useState(null)
   // Assuming useReadData returns an object with data and possibly an error state
   const { data } = useReadData(
-    "http://localhost/cms/dashboard/api/sliderApi/getSlider.php"
+    "http://localhost:3002/api/slider"
   );
 
   // Function to open the form
@@ -23,7 +23,7 @@ const Slider = () => {
     setTitle("Create Slider");
     setApi_info({
       type: "add",
-      url: "http://localhost/cms/dashboard/api/sliderApi/createSlider.php",
+      url: "http://localhost:3002/api/slider",
     });
   };
   // Function to close the form
@@ -34,7 +34,7 @@ const Slider = () => {
     setTitle("update Slider");
     setApi_info({
       type: "edit",
-      url: `http://localhost/cms/dashboard/api/sliderApi/updateSlider.php?id=${val.id}`,
+      url: `http://localhost:3002/api/slider/${val.id}`,
     });
     // header
     setisopen(true);
@@ -47,7 +47,7 @@ const Slider = () => {
   {
      if(selectedUser)
      {
-      Delete(selectedUser,`http://localhost/cms/dashboard/api/sliderApi/deleteSlider.php?id=${selectedUser}`)
+      Delete(selectedUser,`http://localhost:3002/api/slider`)
        setisModalOpen(false)
      }
   }

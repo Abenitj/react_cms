@@ -4,4 +4,6 @@ export default [
   { header: 'Date', key: 'date' },
   { header: 'Category', key: 'category' },
   { header: 'Image', key: 'image' },
+  { header: "createdAt", key: "createdAt" },
+  { header: "updatedAt", key: "updatedAt" },
 ];
