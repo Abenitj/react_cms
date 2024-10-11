@@ -1,6 +1,7 @@
 import { 
-  FaHome, FaCog, FaBlog, FaBox, FaQuoteRight, FaSlidersH, FaQuestionCircle, 
-  FaBuilding, FaShieldAlt, FaEnvelope, FaUsers 
+  FaHome, FaUserCog, FaServicestack, FaBlog, FaBox, FaComments, 
+  FaSlidersH, FaQuestionCircle, FaBuilding, FaHandsHelping, 
+  FaEnvelope, FaUsers, FaUserFriends 
 } from 'react-icons/fa';
 
 export default [
@@ -10,8 +11,13 @@ export default [
     link: "/"
   },
   {
+    label: "Staff",
+    icon: <FaUserCog />,  // Represents staff or user settings
+    link: "/user"
+  },
+  {
     label: "Service",
-    icon: <FaCog />,
+    icon: <FaServicestack />,  // Represents services offered
     link: "/service"
   },
   {
@@ -26,8 +32,8 @@ export default [
   },
   {
     label: "Testimony",
-    icon: <FaQuoteRight />,
-    link: "/Testimonial"
+    icon: <FaComments />,  // Represents testimonials or feedback
+    link: "/testimonial"
   },
   {
     label: "FAQ",
@@ -36,7 +42,7 @@ export default [
   },
   {
     label: "Slider",
-    icon: <FaSlidersH />,  // Changed to better fit the "Slider" label
+    icon: <FaSlidersH />,  // Fits the "Slider" label
     link: "/slider"
   },
   {
@@ -46,12 +52,17 @@ export default [
   },
   {
     label: "Company Value",
-    icon: <FaUsers />,  // Changed to represent people, fitting "Company Value"
-    link: "/company-Value"
+    icon: <FaHandsHelping />,  // Represents values and teamwork
+    link: "/company-value"
   },
   {
     label: "Contact",
     icon: <FaEnvelope />,
     link: "/contact"
+  },
+  {
+    label: "Team Members",
+    icon: <FaUserFriends />,  // Represents a group or team
+    link: "/team-members"
   },
 ];

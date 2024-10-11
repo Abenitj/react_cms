@@ -4,6 +4,7 @@ import {
   FaQuestionCircle,
   FaCommentDots,
   FaIndustry,
+  FaUserFriends,
 } from "react-icons/fa";
 
 export default [
@@ -36,5 +37,10 @@ export default [
     label: "Total Services",
     url: "http://localhost:3002/api/service",
     Icon: FaIndustry,
+  },
+  {
+    label: "Total Team-Member",
+    url: "http://localhost:3002/api/team-member",
+    Icon: FaUserFriends,
   },
 ];

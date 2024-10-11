@@ -3,18 +3,19 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Create from "../api/create";
 import Update from '../api/update';
 
-const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
+const Form = ({ api_info, formFields, title, isOpenProp, isclose }) => {
   const [isOpen, setIsOpen] = useState(isOpenProp);
-
-  useEffect(() => {
-    setIsOpen(isOpenProp);
-  }, [isOpenProp]);
-
   const [formData, setFormData] = useState(
     formFields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {})
   );
   const [fileNames, setFileNames] = useState({});
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(isOpenProp);
+  }, [isOpenProp]);
 
   const handleInputChange = (event) => {
     const { name, value, type, files } = event.target;
@@ -48,7 +49,7 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMessage }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let valid = true;
     const newErrors = {};
@@ -66,14 +67,26 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
         formDataObject.append(key, formData[key]);
       });
 
-      if (api_info.type === 'edit') {
-        Update(formDataObject, api_info.url);
-      } else {
-        Create(formDataObject, api_info.url);
+      setIsSubmitting(true);
+      setSuccessMessage(''); // Reset success message
+      try {
+        if (api_info.type === 'edit') {
+          await Update(formDataObject, api_info.url);
+        } else {
+          const res = await Create(formDataObject, api_info.url);
+          if (res.data.message === 'Username is already taken') {
+            setErrors({ api: 'Username is already taken' }); // Set error for username taken
+          } else {
+            setSuccessMessage('Form submitted successfully!'); // Set success message
+          }
+        }
+        handleClose();
+      } catch (error) {
+        console.error("API Error:", error);
+        setErrors({ api: "username is already registered" });
+      } finally {
+        setIsSubmitting(false);
       }
-      
-      setIsOpen(false);
-      isclose();
     } else {
       setErrors(newErrors);
     }
@@ -82,24 +95,28 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
   const handleClose = () => {
     setIsOpen(false);
     isclose();
+    setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {}));
+    setErrors({});
+    setSuccessMessage(''); // Reset success message
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="relative w-full max-w-3xl bg-primary  border-nuetral text-neutral   rounded-md border-none shadow-sm p-6">
+      <div className="relative w-full max-w-3xl bg-primary border-neutral text-neutral rounded-md border-none shadow-sm p-6">
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 bg-secondary-V2 rounded-full  focus:outline-none"
+          className="absolute top-4 right-4 p-2 bg-secondary-V2 rounded-full focus:outline-none"
+          aria-label="Close form"
         >
-          <XMarkIcon className="h-6 w-6 text-netral " />
+          <XMarkIcon className="h-6 w-6 text-neutral" />
         </button>
         <h2 className="text-2xl font-semibold mb-6 text-neutral text-center">{title}</h2>
         <form onSubmit={handleSubmit} className="space-y-6 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-secondary-V2 scrollbar-track-secondary">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {formFields.map((field, index) => (
-              <div key={index} className="flex flex-col">
+              <div key={index} className="flex flex-col text-[#12bb9a]">
                 <label className="mb-1 flex items-center">
                   {field.label}
                   {field.required && <span className="text-red-500 ml-1">*</span>}
@@ -107,10 +124,10 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
                 <input
                   type={field.type}
                   name={field.name}
+                  value={field.type === 'file' ? undefined : formData[field.name] || ''}
                   onChange={handleInputChange}
-                  className={`border-b bg-secondary-V3 border-secondary rounded-none p-2 focus:outline-none focus:border-blue-500 ${errors[field.name] ? 'border-red-500' : ''}`}
+                  className={`border-b bg-gray-100 border-secondary rounded-none p-2 focus:outline-none focus:border-blue-500 ${errors[field.name] ? 'border-red-500' : ''}`}
                   accept={field.accept || ''}
-                  
                 />
                 {errors[field.name] && (
                   <span className="text-red-500 text-sm mt-1">{errors[field.name]}</span>
@@ -118,12 +135,19 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose,data }) => {
               </div>
             ))}
           </div>
+          {errors.api && (
+            <div className="text-red-500 text-sm text-center mt-2">{errors.api}</div>
+          )}
+          {successMessage && (
+            <div className="text-green-500 text-sm text-center mt-2">{successMessage}</div>
+          )}
           <div className="flex justify-center">
             <button
               type="submit"
               className="w-1/4 bg-secondary-V3 active:bg-secondary-V2 py-2 px-4 rounded-md text-md transition-all duration-100"
+              disabled={isSubmitting}
             >
-              {title}
+              {isSubmitting ? "Submitting..." : title}
             </button>
           </div>
         </form>

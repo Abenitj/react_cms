@@ -2,30 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 /* White Theme */
-:root {
-  --primary: #fff; /* White */
-  --secondary: #F9F6F7; /* Light Gray */
-  --secondary-v2: #e2e2e2; /* Light Grayish */
-  --neutral: #1E2A5E; /* Dark Grayish Blue */
-  --secondary-v3: #ebebeb; /* Light Grayish */
-}
 
-.dark-mode {
-  --primary: #101a27; /* Dark Gray */
-  --secondary: #18202d; /* Darker Gray */
-  --secondary-v2: #363f4b; /* Dark Grayish */
-  --neutral: #F9F6F7; /* Light Gray */
-  --secondary-v3: #1e2630; /* Very Dark Gray */
-}
 /* Warm Greenish Theme */
 :root {
   --primary: #FFFFFF; /* White */
-  --secondary: #E6F4E6; /* Light Warm Green */
-  --secondary-v2: #A3D9A5; /* Warm Green */
-  --neutral: #22A65E; /* Rich Warm Green (similar to green-500) */
-  --secondary-v3: #B6E6B9; /* Soft Warm Green */
+  --secondary: #12bb9a; /* Light Warm Green */
+  --secondary-v2: #36ceaf; /* Warm Green */
+  --neutral: #f8fcfa; /* Rich Warm Green (similar to green-500) */
+  --secondary-v3: #58e0c5; /* Soft Warm Green */
 }
-
 .dark-mode {
   --primary: #102810; /* Dark Warm Green */
   --secondary: #1C3A1C; /* Darker Warm Green */

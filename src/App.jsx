@@ -16,6 +16,7 @@ import Product from "./page/product";
 import AboutCompany from "./page/aboutCompany";
 import CompanyValue from "./page/companyValue";
 import Contact from "./page/contact";
+import TeamMember from "./page/teamMembers";
 const App = () => {
 const [isopen, setisopen] = useState(false)
   return (
@@ -39,7 +40,7 @@ const [isopen, setisopen] = useState(false)
               <Route path="/faq" element={<Faq />} />
               <Route path="/testimonial" element={<Testimonial />} />
               <Route path="/section-title" element={<SectionTitle />} />
-              <Route path="/site-configuration" element={<SiteConfiguration />} />
+              <Route path="/team-members" element={<TeamMember />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/AboutCompany" element={<AboutCompany />} />
               <Route path="/product" element={<Product />} />

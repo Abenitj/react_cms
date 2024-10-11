@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import Table from "../Components/Table";
 import useReadData from "../api/Read";
 import Form from "../Components/Form";
-import UserForm from "../assets/Form-Fields/UserForm"
+import UserForm from "../assets/Form-Fields/UserForm";
 import Delete from "../api/delete";
 import userTable from "../assets/Table-Head/userTable";
 import Modal from "../Components/Modal";
+
 const User = () => {
   const [isopen, setisopen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [api_info, setApi_info] = useState({});
-  const [selectedUser, setselectedUser] = useState(null)
-  // Assuming useReadData returns an object with data and possibly an error state
-  const { data } = useReadData(
-    "http://localhost/cms/dashboard/api/usersApi/getUsers.php"
-  );
+  const [selectedUser, setselectedUser] = useState(null);
+  const [feedback, setFeedback] = useState(""); // State for feedback messages
+  
+  // Fetch user data
+  const { data, error } = useReadData("http://localhost:3002/api/user/");
 
   // Function to open the form
   const handleAddUser = () => {
@@ -23,61 +24,82 @@ const User = () => {
     setTitle("Create User");
     setApi_info({
       type: "add",
-      url: "http://localhost/cms/dashboard/api/usersApi/createUsers.php",
+      url: "http://localhost:3002/api/user/signup",
     });
   };
+
   // Function to close the form
   const handleCloseForm = () => {
     setisopen(false);
   };
+
   const handleEdit = (val) => {
-    setTitle("update User");
+    setTitle("Update User");
     setApi_info({
       type: "edit",
-      url: `http://localhost/cms/dashboard/api/usersApi/updateUsers.php?id=${val.id}`,
+      url: `http://localhost:3002/api/user/${val.id}`,
     });
-    // header
     setisopen(true);
   };
+
   const handleDelete = (val) => {
-    setisModalOpen(true)
-    setselectedUser(val.id)
+    setisModalOpen(true);
+    setselectedUser(val.id);
   };
-  const handleConfirmation=()=>
-  {
-     if(selectedUser)
-     {
-      Delete(selectedUser,`http://localhost/cms/dashboard/api/usersApi/deleteUsers.php?id=${selectedUser}`)
-       setisModalOpen(false)
-     }
-  }
-  const handleCancelDelete=()=>
-  {
-    setisModalOpen(false)
-    setselectedUser(null)
-  }
+
+  const handleConfirmation = async () => {
+    if (selectedUser) {
+      try {
+        await Delete(selectedUser, `http://localhost:3002/api/user/`);
+      } catch (err) {
+        setFeedback("Error deleting user. Please try again."); // Set error message
+      } finally {
+        setisModalOpen(false);
+        setselectedUser(null);
+      }
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setisModalOpen(false);
+    setselectedUser(null);
+  };
+
   return (
     <div>
       <Table
         tableHeaders={userTable}
-        title={"user"}
+        title={"User"}
         onAdd={handleAddUser}
-        data={data}
+        data={data.users}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
-      <Form
-        title={title}
-        formFields={UserForm}
-        isOpenProp={isopen}
-        isclose={handleCloseForm}
-        api_info={api_info}
-      />
-      <Modal 
-      isopen={isModalOpen} 
-      onclose={handleCancelDelete}
-      onConfirm={handleConfirmation}
-      />
+
+      {/* Render Form only when isopen is true */}
+      {isopen && (
+        <Form
+          title={title}
+          formFields={UserForm}
+          isOpenProp={isopen}
+          isclose={handleCloseForm}
+          api_info={api_info}
+        />
+      )}
+
+      {/* Render Modal only when isModalOpen is true */}
+      {isModalOpen && (
+        <Modal 
+          isopen={isModalOpen}
+          onclose={handleCancelDelete}
+          onConfirm={handleConfirmation}
+        />
+      )}
+
+      {/* Display feedback message */}
+      {feedback && <p style={{ color: feedback.includes("Error") ? "red" : "green" }}>{feedback}</p>}
+      
+      {error && <p style={{ color: 'red' }}>Error loading user data</p>}
     </div>
   );
 };

@@ -2,20 +2,19 @@ import axios from 'axios';
 
 const Create = async (formData, url) => {
   try {
-    // Send POST request with form data
     const response = await axios.post(url, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data', // Ensure correct content type
+        'Content-Type': 'multipart/form-data',
       },
     });
 
-    // Log or return the response data
-    console.log(response.data);
-    return response.data; // Return the response data if needed
+    return { data: response.data };
   } catch (error) {
-    // Handle any errors
-    console.error('Error posting form data:', error);
-    throw error; // Re-throw the error for further handling if necessary
+    if (error.response && error.response.data.message) {
+      return { error: error.response.data.message };
+    } else {
+      return { error: 'An unexpected error occurred. Please try again.' };
+    }
   }
 };
 
