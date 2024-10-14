@@ -3,14 +3,14 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Create from "../api/create";
 import Update from '../api/update';
 
-const Form = ({ api_info, formFields, title, isOpenProp, isclose }) => {
+const Form = ({ api_info, formFields, title, isOpenProp, isclose, option }) => {
   const [isOpen, setIsOpen] = useState(isOpenProp);
   const [formData, setFormData] = useState(
     formFields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {})
   );
   const [fileNames, setFileNames] = useState({});
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(''); // State for success message
+  const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -68,16 +68,16 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose }) => {
       });
 
       setIsSubmitting(true);
-      setSuccessMessage(''); // Reset success message
+      setSuccessMessage('');
       try {
         if (api_info.type === 'edit') {
           await Update(formDataObject, api_info.url);
         } else {
           const res = await Create(formDataObject, api_info.url);
           if (res.data.message === 'Username is already taken') {
-            setErrors({ api: 'Username is already taken' }); // Set error for username taken
+            setErrors({ api: 'Username is already taken' });
           } else {
-            setSuccessMessage('Form submitted successfully!'); // Set success message
+            setSuccessMessage('Form submitted successfully!');
           }
         }
         handleClose();
@@ -97,7 +97,7 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose }) => {
     isclose();
     setFormData(formFields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {}));
     setErrors({});
-    setSuccessMessage(''); // Reset success message
+    setSuccessMessage('');
   };
 
   if (!isOpen) return null;
@@ -135,6 +135,30 @@ const Form = ({ api_info, formFields, title, isOpenProp, isclose }) => {
               </div>
             ))}
           </div>
+
+          {/* Conditional rendering for Admin and Staff select inputs */}
+          {option && (
+            <div className="flex flex-col text-[#12bb9a]">
+              <label className="mb-1 flex items-center">
+                Role
+                <span className="text-red-500 ml-1">*</span>
+              </label>
+              <select
+                name="role"
+                value={formData.role || ''}
+                onChange={handleInputChange}
+                className={`border-b bg-gray-100 border-secondary rounded-none p-2 focus:outline-none focus:border-blue-500 ${errors.role ? 'border-red-500' : ''}`}
+              >
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+              </select>
+              {errors.role && (
+                <span className="text-red-500 text-sm mt-1">{errors.role}</span>
+              )}
+            </div>
+          )}
+
           {errors.api && (
             <div className="text-red-500 text-sm text-center mt-2">{errors.api}</div>
           )}

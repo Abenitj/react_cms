@@ -84,6 +84,7 @@ const User = () => {
           isOpenProp={isopen}
           isclose={handleCloseForm}
           api_info={api_info}
+          option={true}
         />
       )}
 

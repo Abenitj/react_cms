@@ -1,43 +1,85 @@
-// src/page/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios';
+import { json, useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Login = ({ login }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize navigate
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Simple authentication check (replace this with your actual authentication logic)
-    if (username === 'aaa' && password === 'aaa') {
-      onLogin(true); // Set user as logged in
-      navigate('/dashboard'); // Redirect to admin panel
-    } else {
-      alert('Invalid credentials');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post('http://localhost:3002/api/user/login', { username, password });
+      if (response.status === 200) {
+        localStorage.setItem('user',JSON.stringify(response.data.userData))
+        
+        login();
+        navigate("/");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-200">
-      <div className="bg-white p-6 rounded shadow-md">
-        <h2 className="text-2xl mb-4">Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mb-4 p-2 border border-gray-300 rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-4 p-2 border border-gray-300 rounded"
-        />
-        <button onClick={handleLogin} className="w-full p-2 bg-blue-500 text-white rounded">
-          Login
-        </button>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-sm">
+        <form onSubmit={handleLogin} className="bg-white shadow-lg rounded-lg px-10 py-8">
+          <h2 className="text-center text-3xl font-semibold text-green-700 mb-8">Sign In</h2>
+
+          {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
+
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              className="shadow-sm border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring focus:ring-green-500"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="shadow-sm border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring focus:ring-green-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="flex items-center justify-between mb-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className={`bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {loading ? 'Logging In...' : 'Log In'}
+            </button>
+          </div>
+
+          <div className="text-center">
+            <a href="#forgot-password" className="text-green-600 hover:text-green-800 text-sm">
+              Forgot password?
+            </a>
+          </div>
+        </form>
       </div>
     </div>
   );

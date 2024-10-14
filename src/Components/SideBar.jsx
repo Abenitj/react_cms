@@ -1,29 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SideBarList from './SideBarList';
 import sideBarData from '../assets/sideBarData';
- // Ensure the file path is correct
 import profile from '../assets/profile';
-const SideBar = () => {
-  return (
-    <div className="w-full h-screen  overflow-x-hidden bg-secondary text-neutral scrollbar-none">
-      {/* Sidebar Container */}
-      <nav className="mt-4 box-border relative">
-        {/* Profile Picture and Name */}
-        <div className="flex flex-col items-center p-4">
-          <img
-            src={profile.image}
-            alt="Profile"
-            className="w-16 h-16  rounded-full border-2 border-neutral"
-          />
-          <h2 className="text-xl font-semibold text-center mt-2">{profile.firstname}{profile.lastname}</h2>
-        </div>
 
-        {/* Sidebar Links */}
+const SideBar = () => {
+  const [user] = useState(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    return storedUser || { role: 'Role not available', fullname: 'Fullname not available' };
+  });
+
+  // Helper function to capitalize the first letter of a string
+  const capitalize = (str) => {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
+  return (
+    <div className="w-full h-screen overflow-x-hidden bg-secondary text-neutral scrollbar-none">
+      <nav className="mt-4 box-border relative">
+        <div className="flex flex-col items-center p-4">
+          <div className="font-bold text-3xl">{capitalize(user.role)}</div>
+          <h2 className="text-xl font-semibold text-center mt-2">
+            {capitalize(user.fullname)}
+          </h2>
+        </div>
         <div className="mt-4 h-[calc(100vh-150px)] overflow-y-scroll scrollbar-thin scrollbar-thumb-secondary-V3 scrollbar-track-secondary">
           {sideBarData.length > 0 ? (
             sideBarData.map((data, index) => (
               <SideBarList
-                key={index} // Assuming sideBarData does not have unique ids
+                key={index} 
                 label={data.label}
                 icon={data.icon}
                 link={data.link}
