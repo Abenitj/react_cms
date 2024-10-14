@@ -73,12 +73,6 @@ const Login = ({ login }) => {
               {loading ? 'Logging In...' : 'Log In'}
             </button>
           </div>
-
-          <div className="text-center">
-            <a href="#forgot-password" className="text-green-600 hover:text-green-800 text-sm">
-              Forgot password?
-            </a>
-          </div>
         </form>
       </div>
     </div>
